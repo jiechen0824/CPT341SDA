@@ -1,5 +1,7 @@
 package edu.ncsu.csc326.coffeemaker;
 
+import java.math.BigDecimal;
+
 import edu.ncsu.csc326.coffeemaker.exceptions.RecipeException;
 
 /**
@@ -7,7 +9,7 @@ import edu.ncsu.csc326.coffeemaker.exceptions.RecipeException;
  */
 public class Recipe {
     private String name;
-    private int price;
+    private BigDecimal price;
     private int amtCoffee;
     private int amtMilk;
     private int amtSugar;
@@ -18,7 +20,7 @@ public class Recipe {
      */
     public Recipe() {
     	this.name = "";
-    	this.price = 0;
+    	this.price = new BigDecimal("0.00");
     	this.amtCoffee = 0;
     	this.amtMilk = 0;
     	this.amtSugar = 0;
@@ -31,6 +33,7 @@ public class Recipe {
     public int getAmtChocolate() {
 		return amtChocolate;
 	}
+    
     /**
 	 * @param amtChocolate   The amtChocolate to set.
 	 */
@@ -47,12 +50,14 @@ public class Recipe {
 			throw new RecipeException("Units of chocolate must be a positive integer");
 		}
 	}
+    
     /**
 	 * @return   Returns the amtCoffee.
 	 */
     public int getAmtCoffee() {
 		return amtCoffee;
 	}
+    
     /**
 	 * @param amtCoffee   The amtCoffee to set.
 	 */
@@ -69,12 +74,14 @@ public class Recipe {
 			throw new RecipeException("Units of coffee must be a positive integer");
 		}
 	}
+    
     /**
 	 * @return   Returns the amtMilk.
 	 */
     public int getAmtMilk() {
 		return amtMilk;
 	}
+    
     /**
 	 * @param amtMilk   The amtMilk to set.
 	 */
@@ -91,12 +98,14 @@ public class Recipe {
 			throw new RecipeException("Units of milk must be a positive integer");
 		}
 	}
+    
     /**
 	 * @return   Returns the amtSugar.
 	 */
     public int getAmtSugar() {
 		return amtSugar;
 	}
+    
     /**
 	 * @param amtSugar   The amtSugar to set.
 	 */
@@ -113,37 +122,41 @@ public class Recipe {
 			throw new RecipeException("Units of sugar must be a positive integer");
 		}
 	}
+    
     /**
 	 * @return   Returns the name.
 	 */
     public String getName() {
 		return name;
 	}
+    
     /**
 	 * @param name   The name to set.
 	 */
-    public void setName(String name) {
-    	if(name != null) {
+    public void setName(String name) throws RecipeException {
+    	if(name != null && !name.isEmpty()) {
     		this.name = name;
     	}
+    	else throw new RecipeException("Please input a valid recipe name.");
 	}
     /**
 	 * @return   Returns the price.
 	 */
-    public int getPrice() {
+    public BigDecimal getPrice() {
 		return price;
 	}
+    
     /**
 	 * @param price   The price to set.
 	 */
     public void setPrice(String price) throws RecipeException{
-    	int amtPrice = 0;
+    	BigDecimal amtPrice;
     	try {
-    		amtPrice = Integer.parseInt(price);
+    		amtPrice = new BigDecimal(price);
     	} catch (NumberFormatException e) {
     		throw new RecipeException("Price must be a positive integer");
     	}
-		if (amtPrice >= 0) {
+		if (amtPrice.compareTo(BigDecimal.ZERO) > 0) {
 			this.price = amtPrice;
 		} else {
 			throw new RecipeException("Price must be a positive integer");
