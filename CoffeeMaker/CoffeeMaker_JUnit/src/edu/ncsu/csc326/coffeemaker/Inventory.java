@@ -1,5 +1,4 @@
 package edu.ncsu.csc326.coffeemaker;
-
 import edu.ncsu.csc326.coffeemaker.exceptions.InventoryException;
 
 /**
@@ -57,14 +56,22 @@ public class Inventory {
     	try {
     		amtChocolate = Integer.parseInt(chocolate);
     	} catch (NumberFormatException e) {
-    		throw new InventoryException("Units of chocolate must be a positive integer");
+    		throw new InventoryException("Units of chocolate must be a positive integer and each addition must not be exceed 300 units");
     	}
-		if (amtChocolate >= 0) {
-			Inventory.chocolate += amtChocolate;
-		} else {
-			throw new InventoryException("Units of chocolate must be a positive integer");
+		if (amtChocolate >= 0 && amtChocolate < 300) {
+			
+			if((Inventory.chocolate +amtChocolate) > 300){
+				throw new InventoryException("The amount of chocolate is full");
+			}else {
+				Inventory.chocolate += amtChocolate;
+			}
+		} 
+		
+		else {
+			throw new InventoryException("Units of chocolate must be a positive integer each addition must not be exceed 300 units");
 		}
     }
+    
     
     /**
      * Returns the current number of coffee units in
@@ -97,12 +104,18 @@ public class Inventory {
     	try {
     		amtCoffee = Integer.parseInt(coffee);
     	} catch (NumberFormatException e) {
-    		throw new InventoryException("Units of coffee must be a positive integer");
+    		throw new InventoryException("Units of coffee must be a positive integer and each addition must not be exceed 300 units");
     	}
-		if (amtCoffee >= 0) {
-			Inventory.coffee += amtCoffee;
+		if (amtCoffee >= 0 && amtCoffee <300) {
+			
+			if((Inventory.coffee +amtCoffee)>300) {
+				throw new InventoryException("The amount of coffee is full");
+			}else {
+					Inventory.coffee += amtCoffee;
+			}
+			
 		} else {
-			throw new InventoryException("Units of coffee must be a positive integer");
+			throw new InventoryException("Units of coffee must be a positive integer or each addition must not be exceed 300 units");
 		}
     }
     
@@ -137,12 +150,17 @@ public class Inventory {
     	try {
     		amtMilk = Integer.parseInt(milk);
     	} catch (NumberFormatException e) {
-    		throw new InventoryException("Units of milk must be a positive integer");
+    		throw new InventoryException("Units of milk must be a positive integer and each addition must not be exceed 300 units");
     	}
-		if (amtMilk >= 0) {
+		if (amtMilk >= 0 && amtMilk <300) {
+			
+			if((Inventory.milk + amtMilk)>300) {
+				throw new InventoryException("The amount of milk is full");
+			}else {
 			Inventory.milk += amtMilk;
+			}
 		} else {
-			throw new InventoryException("Units of milk must be a positive integer");
+			throw new InventoryException("Units of milk must be a positive integer or each addition must not be exceed 300 units");
 		}
     }
     
@@ -177,12 +195,16 @@ public class Inventory {
     	try {
     		amtSugar = Integer.parseInt(sugar);
     	} catch (NumberFormatException e) {
-    		throw new InventoryException("Units of sugar must be a positive integer");
+    		throw new InventoryException("Units of sugar must be a positive integer and each addition must not be exceed 300 units");
     	}
-		if (amtSugar >= 0) {
+		if (amtSugar >= 0 && amtSugar <300) {
+			if((Inventory.sugar +amtSugar)>300) {
+				throw new InventoryException("The amount of sugar is full");
+			}else {
 			Inventory.sugar += amtSugar;
+			}
 		} else {
-			throw new InventoryException("Units of sugar must be a positive integer");
+			throw new InventoryException("Units of sugar must be a positive integer and each addition must not be exceed 300 units");
 		}
     }
     
