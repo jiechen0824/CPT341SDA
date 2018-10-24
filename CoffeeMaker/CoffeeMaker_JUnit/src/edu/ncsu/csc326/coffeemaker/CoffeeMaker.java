@@ -1,6 +1,9 @@
 package edu.ncsu.csc326.coffeemaker;
 
+import java.math.BigDecimal;
+
 import edu.ncsu.csc326.coffeemaker.exceptions.InventoryException;
+import edu.ncsu.csc326.coffeemaker.exceptions.RecipeException;
 
 /**
  * @author Sarah Heckman
@@ -52,7 +55,7 @@ public class CoffeeMaker {
 	 * @param r
 	 * @return String
 	 */
-	public String editRecipe(int recipeToEdit, Recipe r) {
+	public String editRecipe(int recipeToEdit, Recipe r) throws RecipeException {
 		return recipeBook.editRecipe(recipeToEdit, r);
 	}
     
@@ -65,10 +68,29 @@ public class CoffeeMaker {
      * @return boolean
      */
     public synchronized void addInventory(String amtCoffee, String amtMilk, String amtSugar, String amtChocolate) throws InventoryException {
+	    if((inventory.getCoffee()+Integer.parseInt(amtCoffee))>300 || (inventory.getMilk()+Integer.parseInt(amtMilk))>300 || (inventory.getSugar()+Integer.parseInt(amtSugar))>300 || (inventory.getChocolate()+Integer.parseInt(amtChocolate))>300 )
+		{
+	    	if (((inventory.getCoffee())+Integer.parseInt(amtCoffee)) >300){
+	    		System.out.println("The amount of coffee is full.");
+	    	}
+	    	if ((inventory.getMilk()+Integer.parseInt(amtMilk))>300){
+	    		System.out.println("The amount of milk is full.");
+	    	}
+	    	if ((inventory.getSugar()+Integer.parseInt(amtSugar))>300) {
+	    		System.out.println("The amount of sugar is full.");
+	    	}
+	    	if ((inventory.getChocolate()+Integer.parseInt(amtChocolate))>300) {
+	    		System.out.println("The amount of chocholate is full.");
+	    	}
+	    	throw new InventoryException("");
+		}
+	    
+		else {
 	    inventory.addCoffee(amtCoffee);
 	    inventory.addMilk(amtMilk);
 	    inventory.addSugar(amtSugar);
 	    inventory.addChocolate(amtChocolate);
+		}
     }
     
     /**
@@ -84,26 +106,24 @@ public class CoffeeMaker {
      * the user's money if the beverage cannot be made
      * @param r
      * @param amtPaid
-     * @return int
+     * @return BigDecimal
      */
-    public synchronized int makeCoffee(int recipeToPurchase, int amtPaid) {
-        int change = 0;
-        
+     public synchronized BigDecimal makeCoffee(int recipeToPurchase, int amtPaid, int unitbuy) {        
+        BigDecimal change = new BigDecimal("0.00");
         if (getRecipes()[recipeToPurchase] == null) {
-        	change = amtPaid;
-        } else if (getRecipes()[recipeToPurchase].getPrice() <= amtPaid) {
+ 
+        	change = new BigDecimal("-1.00"); // temporary flag for non-existent recipe
+        } else if ((getRecipes()[recipeToPurchase].getPrice().multiply(new BigDecimal(unitbuy))).compareTo(new BigDecimal(amtPaid)) <= 0) {
         	if (inventory.useIngredients(getRecipes()[recipeToPurchase])) {
-        		change = amtPaid - getRecipes()[recipeToPurchase].getPrice();
+        		change = new BigDecimal(amtPaid).subtract((getRecipes()[recipeToPurchase].getPrice()).multiply(new BigDecimal(unitbuy)));
         	} else {
-        		change = amtPaid;
+        		change = new BigDecimal("-2.00"); // temporary flag for insufficient resource
         	}
         } else {
-        	change = amtPaid;
+        	change = new BigDecimal(amtPaid);
         }
-        
         return change;
     }
-
 	/**
 	 * Returns the list of Recipes in the RecipeBook.
 	 * @return Recipe []
