@@ -58,7 +58,7 @@ public class Inventory {
     	} catch (NumberFormatException e) {
     		throw new InventoryException("Units of chocolate must be a positive integer and each addition must not be exceed 300 units");
     	}
-		if (amtChocolate >= 0 && amtChocolate < 300) {
+		if (amtChocolate >= 0 && amtChocolate <= 300) {
 			
 			if((Inventory.chocolate +amtChocolate) > 300){
 				throw new InventoryException("The amount of chocolate is full");
@@ -106,7 +106,7 @@ public class Inventory {
     	} catch (NumberFormatException e) {
     		throw new InventoryException("Units of coffee must be a positive integer and each addition must not be exceed 300 units");
     	}
-		if (amtCoffee >= 0 && amtCoffee <300) {
+		if (amtCoffee >= 0 && amtCoffee <=300) {
 			
 			if((Inventory.coffee +amtCoffee)>300) {
 				throw new InventoryException("The amount of coffee is full");
@@ -152,7 +152,7 @@ public class Inventory {
     	} catch (NumberFormatException e) {
     		throw new InventoryException("Units of milk must be a positive integer and each addition must not be exceed 300 units");
     	}
-		if (amtMilk >= 0 && amtMilk <300) {
+		if (amtMilk >= 0 && amtMilk <=300) {
 			
 			if((Inventory.milk + amtMilk)>300) {
 				throw new InventoryException("The amount of milk is full");
@@ -197,7 +197,7 @@ public class Inventory {
     	} catch (NumberFormatException e) {
     		throw new InventoryException("Units of sugar must be a positive integer and each addition must not be exceed 300 units");
     	}
-		if (amtSugar >= 0 && amtSugar <300) {
+		if (amtSugar >= 0 && amtSugar <=300) {
 			if((Inventory.sugar +amtSugar)>300) {
 				throw new InventoryException("The amount of sugar is full");
 			}else {
